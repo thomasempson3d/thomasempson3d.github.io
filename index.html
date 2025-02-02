@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon - TJ Custom Works</title>
+  <title>TE3D</title>
   <link rel="icon" href="Favicon.png" type="image/png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -13,9 +16,10 @@
     }
 
     body {
-      background-color: #1e1e1e;
+      background-color: #222222;
       color: white;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
@@ -26,8 +30,8 @@
     }
 
     h1 {
-      font-size: 5rem;
-      font-weight: 700;
+      font-size: 6rem;
+      font-weight: 800;
       letter-spacing: 3px;
       text-transform: uppercase;
       word-wrap: break-word;
@@ -41,20 +45,64 @@
       height: auto;
     }
 
+    /* Footer Banner Styles */
+    footer {
+      width: 100%;
+      background-color: #333;
+      padding: 2rem 0;
+      position: absolute;
+      bottom: 0;
+      text-align: center;
+      color: white;
+      font-family: 'Roboto', sans-serif; /* Updated font */
+    }
+
+    footer p {
+      font-size: 1.4rem; /* Increased size */
+      margin-bottom: 1rem;
+      font-weight: 300; /* Non-bold */
+    }
+
+    /* Adjusting social icons position */
+    .social-links {
+      display: flex;
+      justify-content: flex-end; /* Align to the right on desktop */
+      gap: 30px; /* Increased gap between icons */
+      margin-top: 1rem;
+      padding-right: 2rem;
+    }
+
+    .social-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 2rem;
+    }
+
+    /* Remove hover effect on social icons */
+    .social-links a:hover {
+      color: inherit;
+    }
+
     /* Responsive Font Sizes for Mobile */
     @media (max-width: 768px) {
       h1 {
-        font-size: 3.5rem;
+        font-size: 4.5rem;
         letter-spacing: 2px;
       }
       img.logo {
         width: 300px;
       }
+
+      /* Center social icons on mobile */
+      .social-links {
+        justify-content: center; /* Center icons */
+        padding-right: 0;
+      }
     }
 
     @media (max-width: 480px) {
       h1 {
-        font-size: 2.5rem;
+        font-size: 3rem;
         letter-spacing: 1px;
       }
       img.logo {
@@ -62,10 +110,17 @@
       }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
   <img src="Logos.png" alt="TJ Custom Works Logo" class="logo">
-  <h1>Coming Soon...</h1>
+  <h1>COMING SOON...</h1>
+  <footer>
+    <p>&copy; 2025 TJ Custom Works. All rights reserved.</p>
+    <div class="social-links">
+      <a href="https://www.tiktok.com/@thomasempson.3d" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/thomasempson.3d/" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="mailto:enquiries@thomasempson3d.co.uk" target="_blank"><i class="fas fa-envelope"></i></a>
+    </div>
+  </footer>
 </body>
 </html>
