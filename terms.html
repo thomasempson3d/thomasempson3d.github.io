@@ -185,11 +185,19 @@
             transition: all 0.3s ease;
             font-weight: 300;
             font-size: 0.95rem;
+            -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
         }
 
         .footer-section a:hover {
             color: #ffffff;
             transform: translateX(5px);
+        }
+
+        .footer-section a[href^="http"],
+        .footer-section a[href^="mailto:"] {
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .stripe-powered {
@@ -440,9 +448,9 @@
             </div>
             <div class="footer-section">
                 <h3>Connect</h3>
-                <p><a href="https://www.facebook.com/profile.php?id=100092567781515&locale=en_GB" target="_blank" rel="noopener noreferrer">Facebook</a></p>
-                <p><a href="https://discord.gg/6vJQ5Y9et4" target="_blank" rel="noopener noreferrer">Discord</a></p>
-                <p><a href="mailto:enquiries@tjcustomworks.co.uk">Email</a></p>
+                <p><a href="https://www.facebook.com/profile.php?id=100092567781515&locale=en_GB" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, '_blank'); return false;">Facebook</a></p>
+                <p><a href="https://discord.gg/6vJQ5Y9et4" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, '_blank'); return false;">Discord</a></p>
+                <p><a href="mailto:enquiries@tjcustomworks.co.uk" onclick="window.location.href=this.href; return false;">Email</a></p>
             </div>
             <div class="stripe-powered">
                 <span>Powered by</span>
