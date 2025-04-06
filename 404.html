@@ -77,6 +77,16 @@
       animation: slideInRight 0.5s forwards;
     }
     
+    .account-toggle {
+      position: absolute;
+      top: 24px;
+      right: 88px;
+      z-index: 10;
+      opacity: 0;
+      transform: translateX(20px);
+      animation: slideInRight 0.5s forwards;
+    }
+    
     .menu-container {
       display: flex;
       align-items: center;
@@ -108,7 +118,23 @@
       cursor: pointer;
     }
     
-    .menu-container:hover, .theme-button:hover {
+    .account-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      background-color: var(--button-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+    }
+    
+    .menu-container:hover, .theme-button:hover, .account-button:hover {
       background-color: var(--button-hover);
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
@@ -135,7 +161,7 @@
       font-weight: 300;
     }
     
-    .theme-button svg {
+    .theme-button svg, .account-button svg {
       stroke: var(--icon-color);
       transition: stroke 0.3s ease;
       width: 20px;
@@ -248,27 +274,51 @@
     .footer-links {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: space-between;
       margin-bottom: 16px;
+      position: relative;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .footer-left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
     }
     
     .footer-links a {
       color: var(--text);
       text-decoration: none;
       font-weight: 500;
-      margin-right: 60px;
       transition: color 0.2s ease;
       padding: 8px 0;
+      white-space: nowrap;
+      line-height: 1;
     }
     
     .footer-links a:hover {
       text-decoration: underline;
     }
     
-    .copyright {
-      text-align: center;
+    .footer-version {
       color: var(--text-muted);
       font-size: 14px;
+      font-weight: 500;
+      margin-left: auto;
+      line-height: 1;
+    }
+    
+    .copyright {
+      color: var(--text-muted);
+      font-size: 14px;
+      text-align: center;
+      line-height: 1;
+      padding: 8px 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
     
     @keyframes fadeIn {
@@ -321,13 +371,32 @@
       }
       
       .footer-links {
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding-top: 24px;
+      }
+      
+      .footer-left {
+        flex-direction: row;
+        gap: 16px;
+        justify-content: center;
       }
       
       .footer-links a {
-        margin-right: 40px;
-        margin-bottom: 8px;
         font-size: 16px;
+      }
+      
+      .copyright {
+        position: static;
+        transform: none;
+        text-align: center;
+        margin: 12px 0;
+      }
+      
+      .footer-version {
+        margin-left: 0;
+        text-align: center;
       }
       
       .menu {
@@ -335,9 +404,16 @@
         left: 16px;
       }
       
-      .theme-toggle {
+      .theme-toggle, .account-toggle {
         top: 16px;
+      }
+      
+      .theme-toggle {
         right: 16px;
+      }
+      
+      .account-toggle {
+        right: 60px;
       }
       
       .menu-container {
@@ -346,7 +422,7 @@
         font-size: 13px;
       }
       
-      .theme-button {
+      .theme-button, .account-button {
         width: 40px;
         height: 40px;
         padding: 8px;
@@ -360,6 +436,17 @@
       
       .menu-divider {
         margin: 0 8px;
+      }
+      
+      .report-button {
+        bottom: 300px;
+        right: 24px;
+      }
+      
+      .report-form {
+        bottom: 310px;
+        right: 24px;
+        width: calc(100% - 48px);
       }
     }
     
@@ -382,9 +469,16 @@
         left: 12px;
       }
       
-      .theme-toggle {
+      .theme-toggle, .account-toggle {
         top: 12px;
+      }
+      
+      .theme-toggle {
         right: 12px;
+      }
+      
+      .account-toggle {
+        right: 52px;
       }
       
       .menu-container {
@@ -393,7 +487,7 @@
         font-size: 12px;
       }
       
-      .theme-button {
+      .theme-button, .account-button {
         width: 36px;
         height: 36px;
         padding: 6px;
@@ -408,6 +502,141 @@
       .menu-divider {
         margin: 0 6px;
       }
+      
+      .footer-content {
+        padding: 0 16px 24px;
+      }
+    }
+    
+    /* Report Issue Button and Form Styles */
+    .report-button {
+      position: absolute;
+      bottom: 150px;
+      right: 40px;
+      display: flex;
+      align-items: center;
+      padding: 12px 24px;
+      background-color: var(--button-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      z-index: 90;
+    }
+    
+    .report-button:hover {
+      background-color: var(--button-hover);
+      transform: translateY(-2px);
+    }
+    
+    .report-button svg {
+      margin-right: 8px;
+      width: 16px;
+      height: 16px;
+    }
+    
+    .report-form {
+      position: absolute;
+      bottom: 160px;
+      right: 40px;
+      width: 400px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transform-origin: bottom right;
+      transform: scale(0);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 100;
+    }
+    
+    .report-form.active {
+      transform: scale(1);
+      opacity: 1;
+    }
+    
+    .report-form h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    
+    .form-group {
+      margin-bottom: 16px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px 12px;
+      background-color: var(--button-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.875rem;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+    
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--text);
+    }
+    
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    
+    .form-button {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .cancel-button {
+      background-color: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    
+    .submit-button {
+      background-color: var(--text);
+      border: none;
+      color: var(--background);
+    }
+    
+    .cancel-button:hover {
+      background-color: var(--button-hover);
+    }
+    
+    .submit-button:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
@@ -446,6 +675,16 @@
         </div>
       </div>
     </div>
+  </div>
+  
+  <!-- Account toggle button -->
+  <div class="account-toggle">
+    <button class="account-button" aria-label="Account">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    </button>
   </div>
   
   <!-- Theme toggle in top right -->
@@ -489,11 +728,14 @@
     <div class="footer-divider"></div>
     <div class="footer-content">
       <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="changelog.html">Changelog</a>
+        <div class="footer-left">
+          <a href="index.html">Home</a>
+          <a href="portfolio.html">Portfolio</a>
+          <a href="changelog.html">Changelog</a>
+        </div>
+        <span class="copyright">&copy; 2025 TJ Custom Works. All rights reserved.</span>
+        <span class="footer-version">V1.0</span>
       </div>
-      <p class="copyright">&copy; 2025 TJ Custom Works. All rights reserved.</p>
     </div>
   </footer>
 
@@ -552,6 +794,12 @@
         themeIcon.setAttribute('stroke', 'currentColor');
       }
     }
+
+    // Account button functionality
+    const accountButton = document.querySelector('.account-button');
+    accountButton.addEventListener('click', () => {
+      window.location.href = 'account.html';
+    });
   </script>
 </body>
 </html> 

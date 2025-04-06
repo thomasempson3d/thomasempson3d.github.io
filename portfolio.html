@@ -77,6 +77,16 @@
       animation: slideInRight 0.5s forwards;
     }
     
+    .account-toggle {
+      position: absolute;
+      top: 24px;
+      right: 88px;
+      z-index: 10;
+      opacity: 0;
+      transform: translateX(20px);
+      animation: slideInRight 0.5s forwards;
+    }
+    
     .menu-container {
       display: flex;
       align-items: center;
@@ -92,7 +102,7 @@
       height: 48px;
     }
     
-    .theme-button {
+    .theme-button, .account-button {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -108,7 +118,7 @@
       cursor: pointer;
     }
     
-    .menu-container:hover, .theme-button:hover {
+    .menu-container:hover, .theme-button:hover, .account-button:hover {
       background-color: var(--button-hover);
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
@@ -135,7 +145,7 @@
       font-weight: 300;
     }
     
-    .theme-button svg {
+    .theme-button svg, .account-button svg {
       stroke: var(--icon-color);
       transition: stroke 0.3s ease;
       width: 20px;
@@ -439,17 +449,28 @@
     .footer-links {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: space-between;
       margin-bottom: 16px;
+      position: relative;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .footer-left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
     }
     
     .footer-links a {
       color: var(--text);
       text-decoration: none;
       font-weight: 500;
-      margin-right: 60px;
       transition: color 0.2s ease;
       padding: 8px 0;
+      white-space: nowrap;
+      line-height: 1;
     }
     
     .footer-links a:hover {
@@ -457,16 +478,22 @@
     }
     
     .footer-version {
-      margin-left: auto;
       color: var(--text-muted);
       font-size: 14px;
       font-weight: 500;
+      margin-left: auto;
+      line-height: 1;
     }
     
     .copyright {
-      text-align: center;
       color: var(--text-muted);
       font-size: 14px;
+      text-align: center;
+      line-height: 1;
+      padding: 8px 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
     
     @keyframes fadeIn {
@@ -491,7 +518,7 @@
     }
     
     @media (max-width: 768px) {
-      .portfolio-list {
+      .portfolio-container {
         padding: 0 16px 60px;
       }
       
@@ -508,22 +535,76 @@
         height: 200px;
       }
       
-      .copyright {
-        font-size: 12px;
-      }
-      
       .footer-content {
         padding: 0 24px 24px;
       }
       
       .footer-links {
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding-top: 24px;
+      }
+      
+      .footer-left {
+        flex-direction: row;
+        gap: 16px;
+        justify-content: center;
       }
       
       .footer-links a {
-        margin-right: 40px;
-        margin-bottom: 8px;
         font-size: 16px;
+      }
+      
+      .copyright {
+        position: static;
+        transform: none;
+        text-align: center;
+        margin: 12px 0;
+      }
+      
+      .footer-version {
+        margin-left: 0;
+        text-align: center;
+      }
+      
+      .menu {
+        top: 16px;
+        left: 16px;
+      }
+      
+      .theme-toggle, .account-toggle {
+        top: 16px;
+      }
+      
+      .theme-toggle {
+        right: 16px;
+      }
+      
+      .account-toggle {
+        right: 60px;
+      }
+      
+      .menu-container {
+        padding: 0 12px;
+        height: 40px;
+        font-size: 13px;
+      }
+      
+      .theme-button, .account-button {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+      }
+      
+      .menu svg {
+        width: 14px;
+        height: 14px;
+        margin-right: 6px;
+      }
+      
+      .menu-divider {
+        margin: 0 8px;
       }
       
       .enlarged-card {
@@ -548,38 +629,6 @@
       .enlarged-description {
         font-size: 1rem;
       }
-      
-      .menu {
-        top: 16px;
-        left: 16px;
-      }
-      
-      .theme-toggle {
-        top: 16px;
-        right: 16px;
-      }
-      
-      .menu-container {
-        padding: 0 12px;
-        height: 40px;
-        font-size: 13px;
-      }
-      
-      .theme-button {
-        width: 40px;
-        height: 40px;
-        padding: 8px;
-      }
-      
-      .menu svg {
-        width: 14px;
-        height: 14px;
-        margin-right: 6px;
-      }
-      
-      .menu-divider {
-        margin: 0 8px;
-      }
     }
     
     @media (max-width: 480px) {
@@ -596,9 +645,16 @@
         left: 12px;
       }
       
-      .theme-toggle {
+      .theme-toggle, .account-toggle {
         top: 12px;
+      }
+      
+      .theme-toggle {
         right: 12px;
+      }
+      
+      .account-toggle {
+        right: 52px;
       }
       
       .menu-container {
@@ -607,7 +663,7 @@
         font-size: 12px;
       }
       
-      .theme-button {
+      .theme-button, .account-button {
         width: 36px;
         height: 36px;
         padding: 6px;
@@ -621,6 +677,10 @@
       
       .menu-divider {
         margin: 0 6px;
+      }
+      
+      .footer-content {
+        padding: 0 16px 24px;
       }
     }
   </style>
@@ -660,6 +720,16 @@
         </div>
       </div>
     </div>
+  </div>
+  
+  <!-- Account toggle button -->
+  <div class="account-toggle">
+    <button class="account-button" aria-label="Account">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    </button>
   </div>
   
   <!-- Theme toggle in top right -->
@@ -811,12 +881,14 @@
     <div class="footer-divider"></div>
     <div class="footer-content">
       <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="changelog.html">Changelog</a>
+        <div class="footer-left">
+          <a href="index.html">Home</a>
+          <a href="portfolio.html">Portfolio</a>
+          <a href="changelog.html">Changelog</a>
+        </div>
+        <span class="copyright">&copy; 2025 TJ Custom Works. All rights reserved.</span>
         <span class="footer-version">V1.0</span>
       </div>
-      <p class="copyright">&copy; 2025 TJ Custom Works. All rights reserved.</p>
     </div>
   </footer>
   
@@ -885,14 +957,33 @@
     
     // Back to top button functionality
     const backToTopButton = document.getElementById('back-to-top');
+    const footer = document.querySelector('.footer');
     
-    window.addEventListener('scroll', () => {
+    function updateBackToTopPosition() {
+      const footerRect = footer.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const buttonHeight = backToTopButton.offsetHeight;
+      const buttonBottomMargin = 24; // Same as the bottom margin in CSS
+      
+      // Calculate the maximum bottom position before footer overlap
+      const maxBottomPosition = viewportHeight - footerRect.top + buttonBottomMargin;
+      
       if (window.scrollY > 300) {
         backToTopButton.classList.add('visible');
+        
+        // If the footer is in view, adjust the button position
+        if (footerRect.top < viewportHeight) {
+          backToTopButton.style.bottom = `${maxBottomPosition}px`;
+        } else {
+          backToTopButton.style.bottom = `${buttonBottomMargin}px`;
+        }
       } else {
         backToTopButton.classList.remove('visible');
       }
-    });
+    }
+    
+    window.addEventListener('scroll', updateBackToTopPosition);
+    window.addEventListener('resize', updateBackToTopPosition);
     
     backToTopButton.addEventListener('click', () => {
       window.scrollTo({
@@ -997,6 +1088,12 @@
         modalOverlay.classList.remove('active');
         document.body.style.overflow = ''; // Re-enable scrolling
       }
+    });
+
+    // Account button functionality
+    const accountButton = document.querySelector('.account-button');
+    accountButton.addEventListener('click', () => {
+      window.location.href = 'account.html';
     });
   </script>
 </body>
