@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Portfolio - High Quality Mods</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --background: #ffffff;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --button-bg: #ffffff;
+      --button-hover: #f9fafb;
+      --card-bg: #ffffff;
+      --gradient-from: #374151;
+      --gradient-via: #9ca3af;
+      --gradient-to: #374151;
+      --icon-color: #1f2937;
+      --divider-color: #d1d5db;
+      --overlay-bg: rgba(0, 0, 0, 0.5);
+    }
+    
+    html.dark {
+      --background: #0a0a0a;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border: #27272a;
+      --button-bg: #18181b;
+      --button-hover: #27272a;
+      --card-bg: #18181b;
+      --gradient-from: #f9fafb;
+      --gradient-via: #e5e7eb;
+      --gradient-to: #f9fafb;
+      --icon-color: #ffffff;
+      --divider-color: #4b5563;
+      --overlay-bg: rgba(0, 0, 0, 0.7);
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: var(--text);
+      transition: background-color 0.3s ease;
+    }
+    
+    .menu {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      z-index: 10;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: slideIn 0.5s forwards;
+    }
+    
+    .theme-toggle {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      z-index: 10;
+      opacity: 0;
+      transform: translateX(20px);
+      animation: slideInRight 0.5s forwards;
+    }
+    
+    .menu-container {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      background-color: var(--button-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      height: 48px;
+    }
+    
+    .theme-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      background-color: var(--button-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+    }
+    
+    .menu-container:hover, .theme-button:hover {
+      background-color: var(--button-hover);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .menu svg {
+      margin-right: 8px;
+    }
+    
+    .menu-links {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+    
+    .menu-link-item {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+    
+    .menu-divider {
+      margin: 0 12px;
+      color: var(--divider-color);
+      font-weight: 300;
+    }
+    
+    .theme-button svg {
+      stroke: var(--icon-color);
+      transition: stroke 0.3s ease;
+      width: 20px;
+      height: 20px;
+    }
+    
+    .menu a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+    
+    .menu a:hover {
+      text-decoration: underline;
+    }
+    
+    .header {
+      text-align: center;
+      padding: 120px 16px 60px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 24px;
+      line-height: 1.1;
+      background: linear-gradient(to right, var(--gradient-from), var(--gradient-via), var(--gradient-to));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transition: background 0.3s ease;
+    }
+    
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+    }
+    
+    .portfolio-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      padding: 0 24px 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .portfolio-item {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background-color: var(--card-bg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: row;
+      cursor: pointer;
+    }
+    
+    .portfolio-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .portfolio-image-container {
+      flex: 0 0 40%;
+    }
+    
+    .portfolio-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .portfolio-content {
+      flex: 1;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .portfolio-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    
+    .portfolio-description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+    
+    .portfolio-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+    }
+    
+    .portfolio-tag {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 16px;
+      background-color: var(--border);
+      color: var(--text);
+      font-weight: 500;
+    }
+    
+    /* Modal overlay and enlarged card styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--overlay-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 24px;
+    }
+    
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .enlarged-card {
+      width: 90%;
+      max-width: 1000px;
+      max-height: 90vh;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      transform: scale(0.9);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      position: relative;
+    }
+    
+    .modal-overlay.active .enlarged-card {
+      transform: scale(1);
+      opacity: 1;
+    }
+    
+    .enlarged-image-container {
+      flex: 0 0 50%;
+      max-height: 90vh;
+    }
+    
+    .enlarged-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .enlarged-content {
+      flex: 1;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+    
+    .enlarged-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    
+    .enlarged-description {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+    
+    .enlarged-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: auto;
+    }
+    
+    .enlarged-tag {
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background-color: var(--border);
+      color: var(--text);
+      font-weight: 500;
+    }
+    
+    .close-button {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--button-bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.2s ease;
+    }
+    
+    .close-button:hover {
+      background-color: var(--button-hover);
+    }
+    
+    .close-button svg {
+      stroke: var(--text);
+      width: 20px;
+      height: 20px;
+    }
+    
+    .back-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: var(--button-bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      z-index: 90;
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    
+    .back-to-top:hover {
+      background-color: var(--button-hover);
+      transform: translateY(-5px);
+    }
+    
+    .back-to-top svg {
+      stroke: var(--icon-color);
+      width: 20px;
+      height: 20px;
+    }
+    
+    .footer {
+      width: 100%;
+      padding: 0;
+      margin-top: auto;
+    }
+    
+    .footer-divider {
+      height: 1px;
+      background-color: var(--border);
+      width: 100%;
+      margin-bottom: 24px;
+    }
+    
+    .footer-content {
+      padding: 0 40px 24px;
+    }
+    
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 16px;
+    }
+    
+    .footer-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      margin-right: 60px;
+      transition: color 0.2s ease;
+      padding: 8px 0;
+    }
+    
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+    
+    .copyright {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes slideInRight {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .portfolio-list {
+        padding: 0 16px 60px;
+      }
+      
+      .header {
+        padding: 100px 16px 40px;
+      }
+      
+      .portfolio-item {
+        flex-direction: column;
+      }
+      
+      .portfolio-image-container {
+        flex: none;
+        height: 200px;
+      }
+      
+      .copyright {
+        font-size: 12px;
+      }
+      
+      .footer-content {
+        padding: 0 24px 24px;
+      }
+      
+      .footer-links {
+        flex-wrap: wrap;
+      }
+      
+      .footer-links a {
+        margin-right: 40px;
+        margin-bottom: 8px;
+        font-size: 16px;
+      }
+      
+      .enlarged-card {
+        flex-direction: column;
+        width: 95%;
+        max-height: 85vh;
+      }
+      
+      .enlarged-image-container {
+        flex: none;
+        height: 250px;
+      }
+      
+      .enlarged-content {
+        padding: 24px;
+      }
+      
+      .enlarged-title {
+        font-size: 1.5rem;
+      }
+      
+      .enlarged-description {
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Menu in top left with Home, Portfolio, and Changelog links -->
+  <div class="menu">
+    <div class="menu-container">
+      <div class="menu-links">
+        <div class="menu-link-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <a href="index.html">Home</a>
+        </div>
+        <span class="menu-divider">|</span>
+        <div class="menu-link-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <a href="portfolio.html">Portfolio</a>
+        </div>
+        <span class="menu-divider">|</span>
+        <div class="menu-link-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <a href="changelog.html">Changelog</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Theme toggle in top right -->
+  <div class="theme-toggle">
+    <button id="theme-toggle-btn" class="theme-button" aria-label="Toggle dark mode">
+      <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Header section -->
+  <header class="header">
+    <h1>Our Portfolio</h1>
+    <p class="subtitle">Explore our collection of high-quality mods and custom designs. Each project showcases our commitment to excellence and attention to detail.</p>
+  </header>
+
+  <!-- Portfolio list with horizontal layout -->
+  <div class="portfolio-list">
+    <!-- Portfolio Item 1 -->
+    <div class="portfolio-item" data-index="0">
+      <div class="portfolio-image-container">
+        <img src="https://placehold.co/600x400/333/white?text=Game+Mod" alt="Game Mod" class="portfolio-image">
+      </div>
+      <div class="portfolio-content">
+        <h3 class="portfolio-title">Enhanced Gameplay Overhaul</h3>
+        <p class="portfolio-description">A complete overhaul that transforms the base game with improved mechanics, visuals, and new content. This mod rebalances gameplay elements while adding depth to existing systems.</p>
+        <div class="portfolio-tags">
+          <span class="portfolio-tag">Gameplay</span>
+          <span class="portfolio-tag">Overhaul</span>
+          <span class="portfolio-tag">Graphics</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Portfolio Item 2 -->
+    <div class="portfolio-item" data-index="1">
+      <div class="portfolio-image-container">
+        <img src="https://placehold.co/600x400/333/white?text=Weapon+Pack" alt="Weapon Pack" class="portfolio-image">
+      </div>
+      <div class="portfolio-content">
+        <h3 class="portfolio-title">Advanced Weapons Collection</h3>
+        <p class="portfolio-description">A carefully crafted set of high-resolution weapons with custom animations and sound effects. Each weapon is meticulously designed with attention to detail and game balance.</p>
+        <div class="portfolio-tags">
+          <span class="portfolio-tag">Weapons</span>
+          <span class="portfolio-tag">Models</span>
+          <span class="portfolio-tag">Animations</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Portfolio Item 3 -->
+    <div class="portfolio-item" data-index="2">
+      <div class="portfolio-image-container">
+        <img src="https://placehold.co/600x400/333/white?text=Character+Mod" alt="Character Mod" class="portfolio-image">
+      </div>
+      <div class="portfolio-content">
+        <h3 class="portfolio-title">Custom Character Framework</h3>
+        <p class="portfolio-description">A framework that allows for deep character customization with hundreds of unique options. Players can create truly unique characters with unprecedented levels of detail and personalization.</p>
+        <div class="portfolio-tags">
+          <span class="portfolio-tag">Characters</span>
+          <span class="portfolio-tag">Customization</span>
+          <span class="portfolio-tag">Framework</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Portfolio Item 4 -->
+    <div class="portfolio-item" data-index="3">
+      <div class="portfolio-image-container">
+        <img src="https://placehold.co/600x400/333/white?text=Environment" alt="Environment Mod" class="portfolio-image">
+      </div>
+      <div class="portfolio-content">
+        <h3 class="portfolio-title">Immersive Environments</h3>
+        <p class="portfolio-description">Transform game worlds with enhanced lighting, weather systems, and environmental effects. This mod creates more realistic and dynamic environments that respond to game events and time of day.</p>
+        <div class="portfolio-tags">
+          <span class="portfolio-tag">Environment</span>
+          <span class="portfolio-tag">Lighting</span>
+          <span class="portfolio-tag">Weather</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Portfolio Item 5 -->
+    <div class="portfolio-item" data-index="4">
+      <div class="portfolio-image-container">
+        <img src="https://placehold.co/600x400/333/white?text=UI+Overhaul" alt="UI Overhaul" class="portfolio-image">
+      </div>
+      <div class="portfolio-content">
+        <h3 class="portfolio-title">Streamlined UI Redesign</h3>
+        <p class="portfolio-description">A modern, clean UI redesign that improves usability while maintaining the game's aesthetic. The interface is more intuitive and provides better information without cluttering the screen.</p>
+        <div class="portfolio-tags">
+          <span class="portfolio-tag">UI/UX</span>
+          <span class="portfolio-tag">Interface</span>
+          <span class="portfolio-tag">Design</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Portfolio Item 6 -->
+    <div class="portfolio-item" data-index="5">
+      <div class="portfolio-image-container">
+        <img src="https://placehold.co/600x400/333/white?text=Quest+System" alt="Quest System" class="portfolio-image">
+      </div>
+      <div class="portfolio-content">
+        <h3 class="portfolio-title">Dynamic Quest Generator</h3>
+        <p class="portfolio-description">An advanced system that creates procedurally generated quests with meaningful choices and consequences. Each quest feels unique and tailored to the player's actions and game state.</p>
+        <div class="portfolio-tags">
+          <span class="portfolio-tag">Quests</span>
+          <span class="portfolio-tag">Procedural</span>
+          <span class="portfolio-tag">Storytelling</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal overlay for enlarged card -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="enlarged-card">
+      <button class="close-button" id="close-button" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="enlarged-image-container">
+        <img src="/placeholder.svg" alt="" class="enlarged-image" id="enlarged-image">
+      </div>
+      <div class="enlarged-content">
+        <h2 class="enlarged-title" id="enlarged-title"></h2>
+        <p class="enlarged-description" id="enlarged-description"></p>
+        <div class="enlarged-tags" id="enlarged-tags">
+          <!-- Tags will be added dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-divider"></div>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="changelog.html">Changelog</a>
+      </div>
+      <p class="copyright">&copy; 2025 TJ Custom Works. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <!-- Back to top button -->
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script>
+    // Theme toggle functionality
+    const html = document.documentElement;
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    
+    // Check for saved theme preference or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      html.className = savedTheme;
+      updateThemeUI(savedTheme);
+    } else {
+      // Check system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        html.className = 'dark';
+        updateThemeUI('dark');
+      }
+    }
+    
+    // Toggle theme
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = html.className === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      
+      html.className = newTheme;
+      localStorage.setItem('theme', newTheme);
+      updateThemeUI(newTheme);
+    });
+    
+    function updateThemeUI(theme) {
+      if (theme === 'dark') {
+        // Moon icon
+        themeIcon.innerHTML = `
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        `;
+        // Ensure the icon is white in dark mode
+        themeIcon.setAttribute('stroke', 'white');
+      } else {
+        // Sun icon
+        themeIcon.innerHTML = `
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        `;
+        // Reset to default color in light mode
+        themeIcon.setAttribute('stroke', 'currentColor');
+      }
+    }
+    
+    // Back to top button functionality
+    const backToTopButton = document.getElementById('back-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('visible');
+      } else {
+        backToTopButton.classList.remove('visible');
+      }
+    });
+    
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Portfolio card enlargement functionality
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const closeButton = document.getElementById('close-button');
+    const enlargedImage = document.getElementById('enlarged-image');
+    const enlargedTitle = document.getElementById('enlarged-title');
+    const enlargedDescription = document.getElementById('enlarged-description');
+    const enlargedTags = document.getElementById('enlarged-tags');
+    
+    // Store portfolio data for easy access
+    const portfolioData = [
+      {
+        image: "https://placehold.co/600x400/333/white?text=Game+Mod",
+        title: "Enhanced Gameplay Overhaul",
+        description: "A complete overhaul that transforms the base game with improved mechanics, visuals, and new content. This mod rebalances gameplay elements while adding depth to existing systems. The overhaul includes new quests, enhanced AI behavior, improved combat mechanics, and visual enhancements that breathe new life into the game.",
+        tags: ["Gameplay", "Overhaul", "Graphics"]
+      },
+      {
+        image: "https://placehold.co/600x400/333/white?text=Weapon+Pack",
+        title: "Advanced Weapons Collection",
+        description: "A carefully crafted set of high-resolution weapons with custom animations and sound effects. Each weapon is meticulously designed with attention to detail and game balance. The collection includes melee weapons, ranged weapons, and special weapons with unique abilities that add new strategic options to gameplay.",
+        tags: ["Weapons", "Models", "Animations"]
+      },
+      {
+        image: "https://placehold.co/600x400/333/white?text=Character+Mod",
+        title: "Custom Character Framework",
+        description: "A framework that allows for deep character customization with hundreds of unique options. Players can create truly unique characters with unprecedented levels of detail and personalization. The framework includes facial feature customization, body type adjustments, detailed clothing options, and personality traits that affect gameplay.",
+        tags: ["Characters", "Customization", "Framework"]
+      },
+      {
+        image: "https://placehold.co/600x400/333/white?text=Environment",
+        title: "Immersive Environments",
+        description: "Transform game worlds with enhanced lighting, weather systems, and environmental effects. This mod creates more realistic and dynamic environments that respond to game events and time of day. Features include volumetric lighting, realistic weather patterns, dynamic shadows, and environmental audio that changes based on location and conditions.",
+        tags: ["Environment", "Lighting", "Weather"]
+      },
+      {
+        image: "https://placehold.co/600x400/333/white?text=UI+Overhaul",
+        title: "Streamlined UI Redesign",
+        description: "A modern, clean UI redesign that improves usability while maintaining the game's aesthetic. The interface is more intuitive and provides better information without cluttering the screen. The redesign includes customizable HUD elements, improved inventory management, enhanced map functionality, and accessibility options.",
+        tags: ["UI/UX", "Interface", "Design"]
+      },
+      {
+        image: "https://placehold.co/600x400/333/white?text=Quest+System",
+        title: "Dynamic Quest Generator",
+        description: "An advanced system that creates procedurally generated quests with meaningful choices and consequences. Each quest feels unique and tailored to the player's actions and game state. The system includes branching dialogue, multiple quest outcomes, reputation systems, and quests that adapt to the player's previous choices and actions.",
+        tags: ["Quests", "Procedural", "Storytelling"]
+      }
+    ];
+    
+    // Add click event to each portfolio item
+    portfolioItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const index = parseInt(item.getAttribute('data-index'));
+        const data = portfolioData[index];
+        
+        // Populate the enlarged card with data
+        enlargedImage.src = data.image;
+        enlargedImage.alt = data.title;
+        enlargedTitle.textContent = data.title;
+        enlargedDescription.textContent = data.description;
+        
+        // Clear and populate tags
+        enlargedTags.innerHTML = '';
+        data.tags.forEach(tag => {
+          const tagElement = document.createElement('span');
+          tagElement.className = 'enlarged-tag';
+          tagElement.textContent = tag;
+          enlargedTags.appendChild(tagElement);
+        });
+        
+        // Show the modal
+        modalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+      });
+    });
+    
+    // Close modal when clicking the close button
+    closeButton.addEventListener('click', () => {
+      modalOverlay.classList.remove('active');
+      document.body.style.overflow = ''; // Re-enable scrolling
+    });
+    
+    // Close modal when clicking outside the card
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Re-enable scrolling
+      }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Re-enable scrolling
+      }
+    });
+  </script>
+</body>
+</html>
